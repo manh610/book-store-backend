@@ -1,21 +1,16 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { ICreateCustomer } from "src/customer/customer.type";
+import { ICreateUser } from "src/user/user.type";
 
 export class ICreateBill {
-    @ApiProperty()
-    address: string
 
     @ApiProperty()
-    message: string
+    userId: number
 
     @ApiProperty()
-    customerInfo: ICreateCustomer
-
-    @ApiProperty()
-    shoeBills: ShoeBillCreate[]
+    bookBills: BookBillCreate[]
 }
 
-class ShoeBillCreate {
+class BookBillCreate {
     @ApiProperty()
     amount: number
 
@@ -23,5 +18,5 @@ class ShoeBillCreate {
     size: number
 
     @ApiProperty()
-    shoeId: number
+    bookId: number
 }

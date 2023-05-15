@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { User } from "src/user/user.entity";
 
-export class ICreateShoe {
+export class ICreateBook {
     @ApiProperty()
     name: string
 
@@ -21,7 +21,7 @@ export class ICreateShoe {
     quantity: number
 }
 
-export class IUpdateShoe {
+export class IUpdateBook {
     @ApiProperty()
     id: number
 
@@ -41,7 +41,7 @@ export class IUpdateShoe {
     quantity?: number
 }
 
-export interface ShoeDTO {
+export interface BookDTO {
     id: number,
     name: string,
     description: string,
@@ -50,7 +50,7 @@ export interface ShoeDTO {
     quantity: number
 }
 
-export interface ShoeDTOCreate {
+export interface BookDTOCreate {
     name: string,
     description: string,
     imageUrl: string,
@@ -59,7 +59,7 @@ export interface ShoeDTOCreate {
     user: User
 }
 
-export class ShoeID {
+export class BookID {
     @ApiProperty()
     id: number
 }

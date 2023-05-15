@@ -1,9 +1,9 @@
 import { Bill } from "src/bill/bill.entity";
-import { Shoe } from "src/shoe/shoe.entity";
+import { Book } from "src/book/book.entity";
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity({ name: 'shoebills'})
-export class ShoeBill {
+@Entity({ name: 'bookbills'})
+export class BookBill {
     @PrimaryGeneratedColumn()
     id: number
 
@@ -13,11 +13,11 @@ export class ShoeBill {
     @Column()
     size: number
 
-    @ManyToOne(() => Bill, bill => bill.shoebills)
+    @ManyToOne(() => Bill, bill => bill.bookbills)
     @JoinColumn({ name: 'bill_id'})
     bill: Bill
 
-    @ManyToOne(() => Shoe, shoe => shoe.shoebills)
-    @JoinColumn({ name: 'shoe_id'})
-    shoe: Shoe
+    @ManyToOne(() => Book, book => book.bookbills)
+    @JoinColumn({ name: 'book_id'})
+    book: Book
 }

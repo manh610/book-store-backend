@@ -1,44 +1,42 @@
 import { Injectable } from '@nestjs/common';
-import { User } from './user.entity' 
 import { InjectRepository } from '@nestjs/typeorm';
+import { User } from './user.entity';
 import { Repository } from 'typeorm';
-import { UpdateResult, DeleteResult } from  'typeorm';
-import { IUserCreate } from './user.type';
+import { ICreateUser } from './user.type';
+import { Bill } from 'src/bill/bill.entity';
 
 @Injectable()
 export class UserService {
     constructor(
-        @InjectRepository(User)
-        private readonly UserRepo: Repository<User>,
-    ) {}
+        @InjectRepository(User) private readonly userRepo: Repository<User>,
+        @InjectRepository(Bill) private readonly billRepo: Repository<Bill>
+    ){}
 
-    async findAll (): Promise<User[]> {
-        return await this.UserRepo.find();
+    async create(input: ICreateUser): Promise<User>{
+        return await this.userRepo.save(input);
     }
 
-    async findOne (id: number): Promise<User> {
-        return await this.UserRepo.findOne({where: { id: id }});
+    async findById(id: number): Promise<User>{
+        return await this.userRepo.find({
+            where: {id: id},
+            relations: ['bills', 'bills.bookbills', 'bills.bookbills.book']
+        })[0];
     }
 
 
-    async create (user: IUserCreate): Promise<User> {
-        return await this.UserRepo.save(user)
+    async findByBill(billId: number): Promise<User>{
+        const bill = await this.billRepo
+            .createQueryBuilder('bill')
+            .innerJoinAndSelect('bill.user', 'user')
+            .where('bill.id = :billId', {billId})
+            .getOne();
+        return bill?.user;
     }
 
-    async update(user: User): Promise<UpdateResult> {
-        return await this.UserRepo.update(user.id, user);
+    async findAll(): Promise<User[]> {
+        return await this.userRepo.find({
+            relations: ['bills', 'bills.bookbills', 'bills.bookbills.book']
+        })
     }
 
-    async delete(id: number): Promise<DeleteResult> {
-        return await this.UserRepo.delete(id);
-    }
-
-    async checkLogin(username: string, password: string): Promise<User> {
-        return await this.UserRepo.findOne({where: {username: username, password: password}})
-    }
-
-    async findByUsername(username: string): Promise<User> {
-        return await this.UserRepo.findOne({where: {username: username}})
-    }
 }
-

@@ -1,5 +1,5 @@
-import { Customer } from "src/customer/customer.entity";
-import { ShoeBill } from "src/shoebill/shoebill.entity";
+import { User } from "src/user/user.entity";
+import { BookBill } from "src/bookbill/bookbill.entity";
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: 'bills' })
@@ -16,10 +16,10 @@ export class Bill {
     @Column()
     createAt: Date = new Date(Date.now())
 
-    @ManyToOne(() => Customer, customer => customer.bills)
-    @JoinColumn({name: 'customer_id'})
-    customer: Customer
+    @ManyToOne(() => User, user => user.bills)
+    @JoinColumn({name: 'user_id'})
+    user: User
 
-    @OneToMany(() => ShoeBill, shoebill => shoebill.bill)
-    shoebills: ShoeBill[]
+    @OneToMany(() => BookBill, bookbill => bookbill.bill)
+    bookbills: BookBill[]
 }

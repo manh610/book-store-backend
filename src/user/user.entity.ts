@@ -1,18 +1,28 @@
-import { Shoe } from 'src/shoe/shoe.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Bill } from "src/bill/bill.entity";
+import { Book } from "src/book/book.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({name: 'users'})
 export class User {
     @PrimaryGeneratedColumn()
-    id: number;
+    id: number
 
-    @Column('text') 
-    username: string;
+    @Column()
+    fullName: string
 
-    @Column('text')
-    password: string;
+    @Column()
+    username: string
 
-    @OneToMany(() => Shoe, shoe => shoe.user)
-    shoes: Shoe[]
+    @Column()
+    password: string
+
+    @Column()
+    role: string
+
+    @OneToMany(() => Book, book => book.user)
+    books: Book[]
+
+    @OneToMany(() => Bill, bill => bill.user)
+    bills: Bill[];
+    
 }
-
