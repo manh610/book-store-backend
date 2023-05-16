@@ -3,13 +3,13 @@ import { Book } from "src/book/book.entity";
 
 export class ICreateBookBill {
     @ApiProperty()
-    quantity: number
+    amount: number
 
     @ApiProperty()
     bookId: number
 }
 
 export interface IBookDTO {
-    quantity: number,
+    amount: number,
     book: Book
 }

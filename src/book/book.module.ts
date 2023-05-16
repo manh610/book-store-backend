@@ -6,7 +6,10 @@ import { Book } from './book.entity';
 import { UserModule } from 'src/user/user.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Book]), UserModule],
+  imports: [
+	TypeOrmModule.forFeature([Book]), 
+	UserModule
+  ],
   exports: [TypeOrmModule.forFeature([Book])],
   controllers: [BookController],
   providers: [BookService]

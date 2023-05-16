@@ -8,7 +8,7 @@ import { BillModule } from '../bill/bill.module';
 @Module({
 	imports: [
 		TypeOrmModule.forFeature([User]),
-		forwardRef(() => BillModule)
+		BillModule
 	],
 	controllers: [UserController],
 	providers: [UserService],

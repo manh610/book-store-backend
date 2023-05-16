@@ -15,8 +15,5 @@ class BookBillCreate {
     amount: number
 
     @ApiProperty()
-    size: number
-
-    @ApiProperty()
     bookId: number
 }

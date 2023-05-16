@@ -15,7 +15,7 @@ export class BookbillService {
     async create(input: ICreateBookBill): Promise<any>{
         const book = await this.bookRepo.findOne({where: {id: input.bookId}});
         const bookBill: IBookDTO = {
-            quantity: input.quantity,
+            amount: input.amount,
             book: book
         }
         return await this.bookBillRepo.save(bookBill);

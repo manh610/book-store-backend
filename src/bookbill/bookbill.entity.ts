@@ -10,9 +10,6 @@ export class BookBill {
     @Column()
     amount: number
 
-    @Column()
-    size: number
-
     @ManyToOne(() => Bill, bill => bill.bookbills)
     @JoinColumn({ name: 'bill_id'})
     bill: Bill

@@ -35,14 +35,8 @@ export class BillService {
     }
 
     async createBill(input: ICreateBill): Promise<any>{
-        let user = await this.userRepo.findOne({where: {id: input.userInfo.phone}})
-        if ( user==null )
-            await this.userRepo.save(input.userInfo);
-        user = await this.userRepo.findOne({where: {phone: input.userInfo.phone}});
-
+        let user = await this.userRepo.findOne({where: {id: input.userId}})
         const bill = this.billRepo.create({
-            address: input.address,
-            message: input.message,
             user
         });
         await this.billRepo.save(bill);
@@ -51,13 +45,11 @@ export class BillService {
             const book = await this.bookRepo.findOne({where: {id: bookbillReq.bookId}, relations: ['user']});
             const bookbill = this.bookBillRepo.create({
                 amount: bookbillReq.amount,
-                size: bookbillReq.size,
                 bill,
                 book
             })
             await this.bookBillRepo.save(bookbill)
         }
-
         return bill;
     }
 }

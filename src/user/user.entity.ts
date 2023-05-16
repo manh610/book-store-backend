@@ -1,5 +1,6 @@
 import { Bill } from "src/bill/bill.entity";
 import { Book } from "src/book/book.entity";
+import { Comment } from "src/comment/comment.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({name: 'users'})
@@ -21,6 +22,9 @@ export class User {
 
     @OneToMany(() => Book, book => book.user)
     books: Book[]
+
+    @OneToMany(() => Comment, comment => comment.user)
+    comments: Comment[]
 
     @OneToMany(() => Bill, bill => bill.user)
     bills: Bill[];

@@ -40,11 +40,14 @@ export class BookService {
     async create(book: ICreateBook): Promise<Book> {
         const user = await this.UserRepo.findOne({where: {id: book.userId}});
         const bookDTO: BookDTOCreate = {
-            name: book.name,
-            description: book.description,
-            price: book.price,
-            quantity: book.quantity,
+            title: book.title,
+            author: book.author,
+            page: book.page,
+            category: book.category,
+            sold: book.sold,
+            date: book.date,
             imageUrl: book.imageUrl,
+            description: book.description,
             user: user
         }
         return await this.BookRepo.save(bookDTO);

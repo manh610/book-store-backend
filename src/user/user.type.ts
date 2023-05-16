@@ -9,4 +9,7 @@ export class ICreateUser {
 
     @ApiProperty()
     password: string
+
+    @ApiProperty()
+    role: string
 }

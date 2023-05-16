@@ -12,6 +12,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { AuthService } from './auth/auth.service';
 import { User } from './user/user.entity';
 import { Book } from './book/book.entity';
+import { CommentModule } from './comment/comment.module';
 
 @Module({
 	imports: [
@@ -34,6 +35,7 @@ import { Book } from './book/book.entity';
 		BillModule,
 		UserModule,
 		BookbillModule,
+		CommentModule,
 	],
 	controllers: [
 		AppController

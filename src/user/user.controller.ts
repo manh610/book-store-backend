@@ -45,16 +45,4 @@ export class UserController {
             return failResponse('Execute service went wrong', 'ServiceException');
         }
     }
-
-    // @Post('/getByPhone')
-    // async getByPhone(@Body() input: IPhone): Promise<any>{
-    //     try{
-    //         const user = await this.userService.findByPhone(input.phone);
-    //         if ( user==null )
-    //             return failResponse('User not found', 'UserNotFound');
-    //         return successResponse(user);
-    //     } catch(error) {
-    //         return failResponse('Execute service went wrong', 'ServiceException');
-    //     }
-    // }
 }
