@@ -13,6 +13,9 @@ import { AuthService } from './auth/auth.service';
 import { User } from './user/user.entity';
 import { Book } from './book/book.entity';
 import { CommentModule } from './comment/comment.module';
+import { RateModule } from './rate/rate.module';
+import { Comment } from './comment/comment.entity';
+import { Rate } from './rate/rate.entity';
 
 @Module({
 	imports: [
@@ -22,7 +25,7 @@ import { CommentModule } from './comment/comment.module';
 			username: 'root',
 			password: 'root',
 			database: 'laptrinhweb',
-			entities: [User, Book, BookBill, Bill],
+			entities: [User, Book, BookBill, Bill, Comment, Rate],
 			synchronize: true,
 		}),
 		JwtModule.register({
@@ -36,6 +39,7 @@ import { CommentModule } from './comment/comment.module';
 		UserModule,
 		BookbillModule,
 		CommentModule,
+		RateModule
 	],
 	controllers: [
 		AppController

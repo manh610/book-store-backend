@@ -12,7 +12,7 @@ export class BookbillController {
     ){}
 
 
-    @Post()
+    @Post('/create')
     async create(@Body() input: ICreateBookBill): Promise<any> {
         try{    
             const bookbill = await this.bookBillService.create(input);

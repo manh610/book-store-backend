@@ -2,6 +2,7 @@ import {  User } from "src/user/user.entity";
 import { Comment } from "src/comment/comment.entity";
 import { BookBill } from "src/bookbill/bookbill.entity";
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Rate } from "src/rate/rate.entity";
 
 @Entity({name: "books"})
 export class Book {
@@ -37,6 +38,9 @@ export class Book {
 
     @OneToMany(() => Comment, comment => comment.book)
     comments: Comment[]
+
+    @OneToMany(() => Rate, rate => rate.book)
+    rates: Comment[]
 
     @ManyToOne(() => User, user => user.books)
     @JoinColumn({ name: 'user_id'})

@@ -2,7 +2,7 @@ import { Controller, Get, Param, Post, Body } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { failResponse, successResponse } from 'src/utils/http';
-import { ICreateUser } from './user.type';
+import { ILogin, IRegisterUser, IUserCreate, IUserDTO } from './user.type';
 
 @Controller('user')
 @ApiTags('User')
@@ -11,12 +11,43 @@ export class UserController {
         private readonly userService: UserService
     ){}
 
+    
+    @Post('/login')
+    async login(@Body() input: ILogin): Promise<any> {
+        try {
+            if ( !input.username || !input.password ) 
+                return failResponse('Cần điền đầy đủ thông tin', 'FieldIsRequired');
+            const user: IUserDTO = await this.userService.checkLogin(input.username, input.password);
+            
+            if (user==null)
+                return failResponse('Username hoặc password không đúng', 'WrongCredentials');
+            return successResponse(user);
+        } catch(error) {    
+            console.log(error)
+            return failResponse('Execute service went wrong', 'ServiceException');
+        }
+    }
 
     @Post('/register')
-    async createUser(@Body() input: ICreateUser): Promise<any> {
+    async createUser(@Body() input: IRegisterUser): Promise<any> {
         try {
-            const user = await this.userService.create(input);
-            return successResponse(user);
+            if ( !input.username || !input.password || !input.confirmPassword ) 
+                return failResponse('Cần điền đầy đủ thông tin', 'FieldIsRequired');
+            if ( input.password != input.confirmPassword)
+                return failResponse('Confirm password not equal', 'ConfirmNotEqual');
+            if ( input.password.length < 8 ) 
+                return failResponse('Password must be longer 8 character','PasswordLengthShort');
+            const user: IUserDTO = await this.userService.findByUsername(input.username);
+            if (user!=null)
+                return failResponse('Username đã tồn tại', 'WrongCredentials');
+            const data: IUserCreate = {
+                fullName: input.fullName,
+                username: input.username,
+                password: input.password,
+                role: 'USER'
+            }
+            const res = await this.userService.create(data)
+            return successResponse(res);
         }catch(error) {
             return failResponse('Execute service went wrong', 'ServiceException');
         }
