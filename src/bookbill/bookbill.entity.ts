@@ -1,5 +1,6 @@
 import { Bill } from "src/bill/bill.entity";
 import { Book } from "src/book/book.entity";
+import { User } from "src/user/user.entity";
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: 'bookbills'})
@@ -10,9 +11,9 @@ export class BookBill {
     @Column()
     amount: number
 
-    @ManyToOne(() => Bill, bill => bill.bookbills)
-    @JoinColumn({ name: 'bill_id'})
-    bill: Bill
+    @ManyToOne(() => User, user => user.bookbills)
+    @JoinColumn({ name: 'user_id'})
+    user: User
 
     @ManyToOne(() => Book, book => book.bookbills)
     @JoinColumn({ name: 'book_id'})

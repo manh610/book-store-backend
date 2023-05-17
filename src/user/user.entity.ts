@@ -1,5 +1,6 @@
 import { Bill } from "src/bill/bill.entity";
 import { Book } from "src/book/book.entity";
+import { BookBill } from "src/bookbill/bookbill.entity";
 import { Comment } from "src/comment/comment.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
@@ -26,7 +27,7 @@ export class User {
     @OneToMany(() => Comment, comment => comment.user)
     comments: Comment[]
 
-    @OneToMany(() => Bill, bill => bill.user)
-    bills: Bill[];
+    @OneToMany(() => BookBill, bookbill => bookbill.user)
+    bookbills: BookBill[];
     
 }

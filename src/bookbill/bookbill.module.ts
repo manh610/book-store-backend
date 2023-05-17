@@ -4,11 +4,13 @@ import { BookbillService } from './bookbill.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BookBill } from './bookbill.entity';
 import { BookModule } from 'src/book/book.module';
+import { UserModule } from 'src/user/user.module';
 
 @Module({
 	imports: [
 		TypeOrmModule.forFeature([BookBill]),
-		forwardRef(() => BookModule)
+		forwardRef(() => BookModule),
+		forwardRef(() => UserModule)
 	],
 	providers: [BookbillService],
 	controllers: [BookbillController],

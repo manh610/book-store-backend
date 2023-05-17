@@ -1,89 +1,47 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { Book } from "src/book/book.entity";
 import { User } from "src/user/user.entity";
 
-export class ICreateBook {
+export class ICreateComment {
     @ApiProperty()
-    title: string
+    content: string
 
     @ApiProperty()
-    category: string
-
-    @ApiProperty()
-    author: string
-
-    @ApiProperty()
-    date: Date
+    rate: number
 
     @ApiProperty()
     userId: number
 
     @ApiProperty()
-    page: number
-
-    @ApiProperty()
-    sold: number
-
-    @ApiProperty()
-    imageUrl: string
-
-    @ApiProperty()
-    description: string
+    bookId: number
 }
 
-export class IUpdateBook {
+export class IUpdateComment {
     @ApiProperty()
     id: number
 
     @ApiProperty()
-    title?: string
+    content?: string
 
     @ApiProperty()
-    category?: string
+    rate?: number
 
-    @ApiProperty()
-    author?: string
-
-    @ApiProperty()
-    date?: Date
-
-    @ApiProperty()
-    page?: number
-
-    @ApiProperty()
-    sold?: number
-
-    @ApiProperty()
-    imageUrl?: string
-
-    @ApiProperty()
-    description?: string
 }
 
-export interface BookDTO {
+export interface ICommentDTO {
     id: number,
-    title: string,
-    author: string,
-    category: string,
-    page: number,
-    sold: number,
-    date: Date,
-    imageUrl: string,
-    description: string
+    content: string,
+    rate: number
 }
 
-export interface BookDTOCreate {
-    title: string,
-    author: string,
-    category: string,
-    page: number,
-    sold: number,
-    date: Date,
-    imageUrl: string,
-    description: string
-    user: User
+export interface ICommentDTOCreate {
+    content: string,
+    rate: number,
+    user: User,
+    book: Book
 }
 
-export class BookID {
+export class CommentID {
     @ApiProperty()
     id: number
 }

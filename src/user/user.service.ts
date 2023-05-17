@@ -24,14 +24,14 @@ export class UserService {
     }
 
 
-    async findByBill(billId: number): Promise<User>{
-        const bill = await this.billRepo
-            .createQueryBuilder('bill')
-            .innerJoinAndSelect('bill.user', 'user')
-            .where('bill.id = :billId', {billId})
-            .getOne();
-        return bill?.user;
-    }
+    // async findByBill(billId: number): Promise<User>{
+    //     const bill = await this.billRepo
+    //         .createQueryBuilder('bill')
+    //         .innerJoinAndSelect('bill.user', 'user')
+    //         .where('bill.id = :billId', {billId})
+    //         .getOne();
+    //     return bill?.user;
+    // }
 
     async findAll(): Promise<User[]> {
         return await this.userRepo.find({
