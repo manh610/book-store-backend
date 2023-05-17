@@ -21,11 +21,7 @@ export class IUpdateRate {
     id: number
 
     @ApiProperty()
-    content?: string
-
-    @ApiProperty()
     rate?: number
-
 }
 
 export interface IRateDTO {

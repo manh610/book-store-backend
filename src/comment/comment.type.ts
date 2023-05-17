@@ -7,9 +7,6 @@ export class ICreateComment {
     content: string
 
     @ApiProperty()
-    rate: number
-
-    @ApiProperty()
     userId: number
 
     @ApiProperty()
@@ -23,20 +20,15 @@ export class IUpdateComment {
     @ApiProperty()
     content?: string
 
-    @ApiProperty()
-    rate?: number
-
 }
 
 export interface ICommentDTO {
     id: number,
     content: string,
-    rate: number
 }
 
 export interface ICommentDTOCreate {
     content: string,
-    rate: number,
     user: User,
     book: Book
 }
