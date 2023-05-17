@@ -18,7 +18,6 @@ export class CommentService {
         const book = await this.bookRepo.findOne({where: {id: input.bookId}});
         const user = await this.userRepo.findOne({where: {id: input.userId}});
         const bookBill: ICommentDTOCreate = {
-            rate: input.rate,
             content: input.content,
             book: book,
             user: user

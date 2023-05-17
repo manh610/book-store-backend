@@ -24,6 +24,9 @@ export class ICreateBook {
     sold: number
 
     @ApiProperty()
+    price: number
+
+    @ApiProperty()
     imageUrl: string
 
     @ApiProperty()
@@ -57,6 +60,9 @@ export class IUpdateBook {
 
     @ApiProperty()
     description?: string
+
+    @ApiProperty()
+    price?: number
 }
 
 export interface BookDTO {
@@ -68,7 +74,8 @@ export interface BookDTO {
     sold: number,
     date: Date,
     imageUrl: string,
-    description: string
+    description: string,
+    price: number
 }
 
 export interface BookDTOCreate {
@@ -79,7 +86,8 @@ export interface BookDTOCreate {
     sold: number,
     date: Date,
     imageUrl: string,
-    description: string
+    description: string,
+    price: number,
     user: User
 }
 

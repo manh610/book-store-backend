@@ -10,7 +10,7 @@ async function bootstrap() {
 
   // add swagger 
   const config = new DocumentBuilder()
-    .setTitle('API SHOPPING CART')
+    .setTitle('API BOOK SHOP')
     .setDescription('The shopping API description')
     .setVersion('1.0')
     .build();

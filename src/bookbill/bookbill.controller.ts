@@ -3,6 +3,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { BookbillService } from './bookbill.service';
 import { ICreateBookBill } from './bookbill.type';
 import { successResponse, failResponse } from 'src/utils/http';
+import { IDInteface } from 'src/utils/type';
 
 @Controller('bookbill')
 @ApiTags('BookBills')
@@ -22,10 +23,10 @@ export class BookbillController {
         }
     }
 
-    @Get('/user/{userId}')
-    async findByUser(@Param('userId') userId: number): Promise<any> {
+    @Post('/user')
+    async findByUser(@Body() input: IDInteface): Promise<any> {
         try{    
-            const bookbills = await this.bookBillService.findByUser(userId);
+            const bookbills = await this.bookBillService.findByUser(input.id);
             if (bookbills==null)
                 return failResponse('Bookbill not found by user', 'NotFoundByUser');
             return successResponse(bookbills);
@@ -34,13 +35,13 @@ export class BookbillController {
         }
     }
 
-    @Delete('/delete/{id}')
-    async delete(@Param('id') id: number): Promise<any>{
+    @Post('/delete')
+    async delete(@Body() input: IDInteface): Promise<any>{
         try{    
-            const bookbill = await this.bookBillService.findById(id);
+            const bookbill = await this.bookBillService.findById(input.id);
             if (bookbill==null)
                 return failResponse('Bookbill not found', 'NotFound');
-            const res = await this.bookBillService.delete(id);
+            const res = await this.bookBillService.delete(input.id);
             return successResponse(res);
         }catch(error){
             return failResponse('Execute service went wrong', 'ServiceException');

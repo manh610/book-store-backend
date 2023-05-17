@@ -11,9 +11,6 @@ export class Comment {
     @Column()
     content: string
 
-    @Column()
-    rate: number
-
     @ManyToOne(() => Book, book => book.comments)
     @JoinColumn({ name: 'book_id'})
     book: Book

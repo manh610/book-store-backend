@@ -3,6 +3,7 @@ import { RateService } from './rate.service';
 import { ApiTags } from '@nestjs/swagger';
 import { ICreateRate } from './rate.type';
 import { failResponse, successResponse } from 'src/utils/http';
+import { IDInteface } from 'src/utils/type';
 
 @Controller('rate')
 @ApiTags('Rates')
@@ -22,10 +23,10 @@ export class RateController {
         }
     }
 
-    @Get('/user/{userId}')
-    async findByUser(@Param('userId') userId: number): Promise<any> {
+    @Post('/user')
+    async findByUser(@Body() input: IDInteface): Promise<any> {
         try{    
-            const rates = await this.rateService.findByUser(userId);
+            const rates = await this.rateService.findByUser(input.id);
             if (rates==null)
                 return failResponse('Rate not found by user', 'NotFoundByUser');
             return successResponse(rates);
@@ -34,10 +35,10 @@ export class RateController {
         }
     }
 
-    @Get('/book/{bookId}')
-    async findByBook(@Param('bookId') bookId: number): Promise<any> {
+    @Post('/book')
+    async findByBook(@Body() input: IDInteface): Promise<any> {
         try{    
-            const rates = await this.rateService.findByBook(bookId);
+            const rates = await this.rateService.findByBook(input.id);
             if (rates==null)
                 return failResponse('Rate not found by book', 'NotFoundByBook');
             return successResponse(rates);

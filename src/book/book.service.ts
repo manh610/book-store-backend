@@ -48,6 +48,7 @@ export class BookService {
             date: book.date,
             imageUrl: book.imageUrl,
             description: book.description,
+            price: book.price,
             user: user
         }
         return await this.BookRepo.save(bookDTO);

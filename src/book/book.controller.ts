@@ -16,7 +16,7 @@ export class BookController {
         try{
             if (!input.title || !input.author || 
                 !input.category || !input.page || 
-                !input.sold || !input.date || input.userId ||
+                !input.sold || !input.date || !input.userId ||
                 !input.imageUrl || !input.description)
                 return failResponse('Cần điền đầy đủ thông tin', 'FieldIsRequired');
             const book = await this.bookService.create(input);

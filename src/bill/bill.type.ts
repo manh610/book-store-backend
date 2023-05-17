@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { ICreateUser } from "src/user/user.type";
+// import { ICreateUser } from "src/user/user.type";
 
 export class ICreateBill {
 

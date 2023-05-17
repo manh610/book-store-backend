@@ -25,6 +25,9 @@ export class Book {
     page: number
 
     @Column()
+    price: number
+
+    @Column()
     sold: number
 
     @Column()

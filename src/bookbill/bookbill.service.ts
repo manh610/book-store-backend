@@ -38,6 +38,7 @@ export class BookbillService {
             book: book,
             user: user
         }
+        const updateSold = await this.bookRepo.update(book.id, {sold: book.sold + input.amount})
         return await this.bookBillRepo.save(bookBill);
     }
 
