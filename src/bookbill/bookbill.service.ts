@@ -15,6 +15,15 @@ export class BookbillService {
     ){}
     
     async delete(id: number): Promise<DeleteResult>{
+        const bookBill = await this.bookBillRepo.findOne({
+            where: {
+                id: id,
+            },
+            relations: [
+                'user', 'book'
+            ]
+        });
+        const updateSold = await this.bookRepo.update(bookBill.book.id, {sold: bookBill.book.sold - bookBill.amount})
         return await this.bookBillRepo.delete(id);
     }
 
@@ -29,6 +38,15 @@ export class BookbillService {
         });
     }
 
+    async findByUserBook(userId: number, bookId: number): Promise<BookBill> {
+        return await this.bookBillRepo.findOne({
+            where: {
+                user: {id: userId},
+                book: {id: bookId}
+            },
+            relations: [ 'user', 'book' ]
+        })
+    }
 
     async create(input: ICreateBookBill): Promise<any>{
         const book = await this.bookRepo.findOne({where: {id: input.bookId}});
@@ -52,6 +70,11 @@ export class BookbillService {
                 'user', 'book'
             ]
         })
+    }
+
+    async updateAmount(id: number, input: ICreateBookBill): Promise<any> {
+        const bookBill = await this.bookBillRepo.findOne({where: { user: {id: input.userId}, book: {id: input.bookId} }});
+        return this.bookBillRepo.update(id, {amount: bookBill.amount + input.amount})
     }
 
 }

@@ -16,6 +16,11 @@ export class BookbillController {
     @Post('/create')
     async create(@Body() input: ICreateBookBill): Promise<any> {
         try{    
+            const checkExist = await this.bookBillService.findByUserBook(input.userId, input.bookId);
+            if ( checkExist!=null ) {
+                const res = await this.bookBillService.updateAmount(checkExist.id, input);
+                return successResponse(res);
+            }
             const bookbill = await this.bookBillService.create(input);
             return successResponse(bookbill);
         }catch(error){
