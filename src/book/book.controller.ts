@@ -16,9 +16,12 @@ export class BookController {
         try{
             if (!input.title || !input.author || 
                 !input.category || !input.page || 
-                !input.sold || !input.date || !input.userId ||
-                !input.imageUrl || !input.description)
+                input.sold==null || !input.date || !input.userId ||
+                !input.imageUrl || !input.description || input.price==null)
                 return failResponse('Cần điền đầy đủ thông tin', 'FieldIsRequired');
+            const checkExist = await this.bookService.findByTitleAndAuthor(input.title, input.author);
+            if ( checkExist!=null )
+                return failResponse('Sách đã tồn tại (cùng tiêu đề, cùng tác giả)','BookExist');
             const book = await this.bookService.create(input);
             return successResponse(book);
         } catch(error) {

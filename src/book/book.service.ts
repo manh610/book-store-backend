@@ -37,6 +37,15 @@ export class BookService {
         });
     }
 
+    async findByTitleAndAuthor(title: string, author: string): Promise<Book> {
+        return await this.BookRepo.findOne({
+            where: {
+                title: title,
+                author: author
+            }
+        })
+    }
+
     async create(book: ICreateBook): Promise<Book> {
         const user = await this.UserRepo.findOne({where: {id: book.userId}});
         const bookDTO: BookDTOCreate = {
