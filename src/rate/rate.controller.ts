@@ -16,6 +16,14 @@ export class RateController {
     @Post()
     async create(@Body() input: ICreateRate): Promise<any> {
         try{    
+            const check = await this.rateService.checkExist(input.bookId, input.userId);
+            console.log(check)
+            if ( check.length > 0 ) {
+                const update  = await this.rateService.updateRate(check[0].id, input.rate);
+                if ( update==null )
+                    return failResponse('Update Rate Fail', 'UpdateFail')
+                return successResponse(update);
+            }
             const rate = await this.rateService.create(input);
             return successResponse(rate);
         }catch(error){
@@ -46,4 +54,5 @@ export class RateController {
             return failResponse('Execute service went wrong', 'ServiceException');
         }
     }
+
 }

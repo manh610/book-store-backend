@@ -4,7 +4,7 @@ import { Rate } from './rate.entity';
 import { Book } from 'src/book/book.entity';
 import { User } from 'src/user/user.entity';
 import { IRateDTOCreate, ICreateRate } from './rate.type';
-import { Repository } from 'typeorm';
+import { Repository, UpdateResult } from 'typeorm';
 
 @Injectable()
 export class RateService {
@@ -14,6 +14,19 @@ export class RateService {
         @InjectRepository(User) private readonly userRepo: Repository<User>
     ){}
     
+    async checkExist(bookId: number, userId: number): Promise<any>{
+        return await this.rateRepo.find({
+            where: {
+                user: {id: userId},
+                book: {id: bookId}
+            }
+        })
+    }
+
+    async  updateRate(id: number, rate: number): Promise<any> {
+        return await this.rateRepo.update(id, {rate: rate});
+    }
+
     async create(input: ICreateRate): Promise<any>{
         const book = await this.bookRepo.findOne({where: {id: input.bookId}});
         const user = await this.userRepo.findOne({where: {id: input.userId}});

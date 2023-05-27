@@ -33,7 +33,7 @@ export class Book {
     @Column()
     imageUrl: string
 
-    @Column()
+    @Column('longtext')
     description: string
 
     @OneToMany(() => BookBill, bookbill => bookbill.book)

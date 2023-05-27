@@ -42,9 +42,7 @@ export class UserService {
     // }
 
     async findAll(): Promise<User[]> {
-        return await this.userRepo.find({
-            relations: ['bills', 'bills.bookbills', 'bills.bookbills.book']
-        })
+        return await this.userRepo.find()
     }
 
 }

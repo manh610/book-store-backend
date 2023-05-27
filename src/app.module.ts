@@ -9,7 +9,6 @@ import { BookbillModule } from './bookbill/bookbill.module';
 import { BookBill } from './bookbill/bookbill.entity';
 import { Bill } from './bill/bill.entity';
 import { JwtModule } from '@nestjs/jwt';
-import { AuthService } from './auth/auth.service';
 import { User } from './user/user.entity';
 import { Book } from './book/book.entity';
 import { CommentModule } from './comment/comment.module';
@@ -44,7 +43,7 @@ import { Rate } from './rate/rate.entity';
 	controllers: [
 		AppController
 	],
-	providers: [AppService, AuthService],
+	providers: [AppService],
 })
 export class AppModule {}
 
