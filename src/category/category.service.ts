@@ -24,6 +24,12 @@ export class CategoryService {
     }
 
     async create(input: ICreateCategory): Promise<Category>{
-        return await this.categoryRepo.save(input);
+        console.log('create cateogry')
+        try {
+            const res = await this.categoryRepo.save(input);
+            return res;
+        } catch(err) {
+            console.log(err)
+        }
     }
 }

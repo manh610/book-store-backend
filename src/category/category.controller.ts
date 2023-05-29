@@ -27,6 +27,7 @@ export class CategoryController {
     async createUser(@Body() input: ICreateCategory): Promise<any> {
         try {
             const res = await this.categoryService.create(input)
+            console.log(res)
             return successResponse(res);
         }catch(error) {
             return failResponse('Execute service went wrong', 'ServiceException');

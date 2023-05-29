@@ -73,15 +73,17 @@ export class BookbillService {
     }
 
     async findByUserinCart(userId: number): Promise<BookBill[]> {
-        return this.bookBillRepo.find({
-            where: {
-                user: {id: userId},
-                bill: null
-            },
-            relations: [
-                'user', 'book'
-            ]
-        })
+        try {
+            return this.bookBillRepo.createQueryBuilder('bookBill')
+                                .leftJoinAndSelect('bookBill.user', 'user')
+                                .leftJoinAndSelect('bookBill.book', 'book')
+                                .leftJoinAndSelect('bookBill.bill', 'bill')
+                                .where('user.id = :userId', { userId })
+                                .andWhere('bill_id IS NULL')
+                                .getMany();
+        }catch(err) {
+            console.log(err)
+        } 
     }
 
     async updateAmount(id: number, input: ICreateBookBill): Promise<any> {

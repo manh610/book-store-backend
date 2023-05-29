@@ -16,6 +16,7 @@ import { RateModule } from './rate/rate.module';
 import { Comment } from './comment/comment.entity';
 import { Rate } from './rate/rate.entity';
 import { CategoryModule } from './category/category.module';
+import { Category } from './category/category.entity';
 
 @Module({
 	imports: [
@@ -25,7 +26,7 @@ import { CategoryModule } from './category/category.module';
 			username: 'root',
 			password: 'root',
 			database: 'laptrinhweb',
-			entities: [User, Book, BookBill, Bill, Comment, Rate],
+			entities: [User, Book, BookBill, Bill, Comment, Rate, Category],
 			synchronize: true,
 		}),
 		JwtModule.register({

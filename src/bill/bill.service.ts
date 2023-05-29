@@ -31,25 +31,26 @@ export class BillService {
             where: {
                 user: {id: userId}
             },
-            relations: ['user', 'bookbills', 'bookbills.book']
+            relations: ['user', 'bookbills', 'bookbills.book', 'bookbills.book.category']
         })
     }
 
     async createBill(input: ICreateBill): Promise<any>{
-        let user = await this.userRepo.findOne({where: {id: input.userId}})
-        const bill = this.billRepo.create({
-            user
-        });
-        const billAns = await this.billRepo.save(bill);
-
-        for ( const bookbillReq of input.bookBills ) {
-            const bookbill = await this.bookBillRepo.findOne({where: {id: bookbillReq}});
-            await this.bookBillRepo.update(bookbill.id, {bill: billAns})
+        try {
+            let user = await this.userRepo.findOne({where: {id: input.userId}})
+            const bill = this.billRepo.create({
+                user: user,
+            });
+            const billAns = await this.billRepo.save(bill);
+    
+            for ( const bookbillReq of input.bookBills ) {
+                const bookbill = await this.bookBillRepo.findOne({where: {id: bookbillReq}});
+                await this.bookBillRepo.update(bookbill.id, {bill: billAns})
+            }
+            return billAns;
+        } catch(err) {
+            console.log(err)
         }
-        return billAns;
-    }
-
-    async addBooktoBill(userId: number, bookId: number): Promise<any>{
-
+        
     }
 }

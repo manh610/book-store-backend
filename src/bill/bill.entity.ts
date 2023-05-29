@@ -7,6 +7,9 @@ export class Bill {
     @PrimaryGeneratedColumn()
     id: number
 
+    @Column()
+    createAt: Date = new Date(Date.now())
+
     @ManyToOne(() => User, user => user.bills)
     @JoinColumn({name: 'user_id'})
     user: User

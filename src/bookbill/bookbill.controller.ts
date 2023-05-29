@@ -48,6 +48,7 @@ export class BookbillController {
                 return failResponse('Bookbill not found by user', 'NotFoundByUser');
             return successResponse(bookbills);
         }catch(error){
+            console.log(error)
             return failResponse('Execute service went wrong', 'ServiceException');
         }
     }

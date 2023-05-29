@@ -17,7 +17,7 @@ export class BookService {
 
     async findAll(): Promise<Book[]> {
         return await this.BookRepo.find({
-            relations: ['user']
+            relations: ['user', 'category']
         });
     }
 
@@ -35,7 +35,8 @@ export class BookService {
             // },
             where: {
                 id: id,
-            }
+            },
+            relations: ['category']
         });
     }
 
@@ -67,7 +68,23 @@ export class BookService {
     }
 
     async update(id: number, book: IUpdateBook): Promise<UpdateResult> {
-        return await this.BookRepo.update(id, book);
+        try {
+            const category = await this.categoryRepo.findOne({where: {id: book.categoryId}})
+            const infoUpdate = {
+                title: book.title,
+                author: book.author,
+                category: category,
+                page: book.page,
+                sold: book.sold,
+                date: book.date,
+                imageUrl: book.imageUrl,
+                description: book.description,
+                price: book.price
+            }
+            return await this.BookRepo.update(id, infoUpdate);
+        } catch(err) {
+            console.log(err)
+        }
     }
 
     async delete(id: number): Promise<DeleteResult>{
