@@ -15,7 +15,7 @@ export class BookController {
     async createbook(@Body() input: ICreateBook): Promise<any> {
         try{
             if (!input.title || !input.author || 
-                !input.category || !input.page || 
+                !input.categoryId || !input.page || 
                 input.sold==null || !input.date || !input.userId ||
                 !input.imageUrl || !input.description || input.price==null)
                 return failResponse('Cần điền đầy đủ thông tin', 'FieldIsRequired');

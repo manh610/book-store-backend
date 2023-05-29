@@ -72,6 +72,18 @@ export class BookbillService {
         })
     }
 
+    async findByUserinCart(userId: number): Promise<BookBill[]> {
+        return this.bookBillRepo.find({
+            where: {
+                user: {id: userId},
+                bill: null
+            },
+            relations: [
+                'user', 'book'
+            ]
+        })
+    }
+
     async updateAmount(id: number, input: ICreateBookBill): Promise<any> {
         const bookBill = await this.bookBillRepo.findOne({where: { user: {id: input.userId}, book: {id: input.bookId} }});
         return this.bookBillRepo.update(id, {amount: bookBill.amount + input.amount})

@@ -18,4 +18,8 @@ export class BookBill {
     @ManyToOne(() => Book, book => book.bookbills)
     @JoinColumn({ name: 'book_id'})
     book: Book
+
+    @ManyToOne(() => Bill, bill => bill.bookbills)
+    @JoinColumn({ name: 'bill_id'})
+    bill: Bill
 }

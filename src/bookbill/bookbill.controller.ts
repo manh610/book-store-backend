@@ -40,6 +40,18 @@ export class BookbillController {
         }
     }
 
+    @Post('/user/cart')
+    async findByUserinCart(@Body() input: IDInteface): Promise<any> {
+        try{    
+            const bookbills = await this.bookBillService.findByUserinCart(input.id);
+            if (bookbills==null)
+                return failResponse('Bookbill not found by user', 'NotFoundByUser');
+            return successResponse(bookbills);
+        }catch(error){
+            return failResponse('Execute service went wrong', 'ServiceException');
+        }
+    }
+
     @Post('/delete')
     async delete(@Body() input: IDInteface): Promise<any>{
         try{    

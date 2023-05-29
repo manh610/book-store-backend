@@ -7,10 +7,10 @@ export class Bill {
     @PrimaryGeneratedColumn()
     id: number
 
-    // @ManyToOne(() => User, user => user.bills)
-    // @JoinColumn({name: 'user_id'})
-    // user: User
+    @ManyToOne(() => User, user => user.bills)
+    @JoinColumn({name: 'user_id'})
+    user: User
 
-    // @OneToMany(() => BookBill, bookbill => bookbill.bill)
-    // bookbills: BookBill[]
+    @OneToMany(() => BookBill, bookbill => bookbill.bill)
+    bookbills: BookBill[]
 }

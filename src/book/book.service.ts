@@ -4,13 +4,15 @@ import { Book } from './book.entity';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { ICreateBook, IUpdateBook, BookDTO, BookDTOCreate } from './book.type';
 import { User } from 'src/user/user.entity';
+import { Category } from 'src/category/category.entity';
 
 @Injectable()
 export class BookService {
 
     constructor(
         @InjectRepository(Book) private readonly BookRepo: Repository<Book>,
-        @InjectRepository(User) private readonly UserRepo: Repository<User>
+        @InjectRepository(User) private readonly UserRepo: Repository<User>,
+        @InjectRepository(Category) private readonly categoryRepo: Repository<Category>
     ) {}
 
     async findAll(): Promise<Book[]> {
@@ -48,11 +50,12 @@ export class BookService {
 
     async create(book: ICreateBook): Promise<Book> {
         const user = await this.UserRepo.findOne({where: {id: book.userId}});
+        const category = await this.categoryRepo.findOne({where: {id: book.categoryId}})
         const bookDTO: BookDTOCreate = {
             title: book.title,
             author: book.author,
             page: book.page,
-            category: book.category,
+            category: category,
             sold: book.sold,
             date: book.date,
             imageUrl: book.imageUrl,

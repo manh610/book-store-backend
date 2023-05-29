@@ -1,4 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { Category } from "src/category/category.entity";
 import { User } from "src/user/user.entity";
 
 export class ICreateBook {
@@ -6,7 +7,7 @@ export class ICreateBook {
     title: string
 
     @ApiProperty()
-    category: string
+    categoryId: number
 
     @ApiProperty()
     author: string
@@ -41,7 +42,7 @@ export class IUpdateBook {
     title?: string
 
     @ApiProperty()
-    category?: string
+    categoryId?: number
 
     @ApiProperty()
     author?: string
@@ -69,7 +70,7 @@ export interface BookDTO {
     id: number,
     title: string,
     author: string,
-    category: string,
+    categoryId: number,
     page: number,
     sold: number,
     date: Date,
@@ -81,7 +82,7 @@ export interface BookDTO {
 export interface BookDTOCreate {
     title: string,
     author: string,
-    category: string,
+    category: Category,
     page: number,
     sold: number,
     date: Date,

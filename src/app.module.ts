@@ -15,6 +15,7 @@ import { CommentModule } from './comment/comment.module';
 import { RateModule } from './rate/rate.module';
 import { Comment } from './comment/comment.entity';
 import { Rate } from './rate/rate.entity';
+import { CategoryModule } from './category/category.module';
 
 @Module({
 	imports: [
@@ -38,7 +39,8 @@ import { Rate } from './rate/rate.entity';
 		UserModule,
 		BookbillModule,
 		CommentModule,
-		RateModule
+		RateModule,
+		CategoryModule
 	],
 	controllers: [
 		AppController

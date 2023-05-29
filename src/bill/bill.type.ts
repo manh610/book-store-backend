@@ -7,13 +7,5 @@ export class ICreateBill {
     userId: number
 
     @ApiProperty()
-    bookBills: BookBillCreate[]
-}
-
-class BookBillCreate {
-    @ApiProperty()
-    amount: number
-
-    @ApiProperty()
-    bookId: number
+    bookBills: number[]
 }

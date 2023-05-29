@@ -29,5 +29,8 @@ export class User {
 
     @OneToMany(() => BookBill, bookbill => bookbill.user)
     bookbills: BookBill[];
+
+    @OneToMany(() => Bill, bill => bill.user)
+    bills: Bill[];
     
 }

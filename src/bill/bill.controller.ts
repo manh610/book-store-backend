@@ -3,6 +3,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { BillService } from './bill.service';
 import { failResponse, successResponse } from 'src/utils/http';
 import { ICreateBill } from './bill.type';
+import { IDInteface } from 'src/utils/type';
 
 @Controller('bill')
 @ApiTags('Bills')
@@ -12,37 +13,37 @@ export class BillController {
     ){}
 
 
-    // @Post()
-    // async create(@Body() input: ICreateBill): Promise<any> {
-    //     try{    
-    //         const bill = await this.billService.createBill(input);
-    //         return successResponse(bill);
-    //     }catch(error){
-    //         return failResponse('Execute service went wrong', 'ServiceException');
-    //     }
-    // }
+    @Post()
+    async create(@Body() input: ICreateBill): Promise<any> {
+        try{    
+            const bill = await this.billService.createBill(input);
+            return successResponse(bill);
+        }catch(error){
+            return failResponse('Execute service went wrong', 'ServiceException');
+        }
+    }
 
-    // @Get('/user/{id}')
-    // async findByUser(@Param('id') userId: number): Promise<any>{
-    //     try{    
-    //         const listBill = await this.billService.findByUser(userId);
-    //         if (listBill==null) 
-    //             return failResponse('Bill is not found', 'BillNotFound');
-    //         return successResponse(listBill);
-    //     }catch(error){
-    //         return failResponse('Execute service went wrong', 'ServiceException');
-    //     }
-    // }
+    @Post('/user')
+    async findByUser(@Body() input: IDInteface): Promise<any>{
+        try{    
+            const listBill = await this.billService.findByUser(input.id);
+            if (listBill==null) 
+                return failResponse('Bill is not found', 'BillNotFound');
+            return successResponse(listBill);
+        }catch(error){
+            return failResponse('Execute service went wrong', 'ServiceException');
+        }
+    }
 
-    // @Get('/getAll')
-    // async findAll(): Promise<any> {
-    //     try{    
-    //         const listBill = await this.billService.findAll();
-    //         if (listBill==null)
-    //             return failResponse('Bill is not found', 'BillNotFound');
-    //         return successResponse(listBill);
-    //     }catch(error){
-    //         return failResponse('Execute service went wrong', 'ServiceException');
-    //     }
-    // }
+    @Get('/getAll')
+    async findAll(): Promise<any> {
+        try{    
+            const listBill = await this.billService.findAll();
+            if (listBill==null)
+                return failResponse('Bill is not found', 'BillNotFound');
+            return successResponse(listBill);
+        }catch(error){
+            return failResponse('Execute service went wrong', 'ServiceException');
+        }
+    }
 }

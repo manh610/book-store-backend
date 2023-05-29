@@ -31,15 +31,10 @@ export class UserService {
         return await this.userRepo.findOne({where: {username: username, password: password}})
     }
 
-
-    // async findByBill(billId: number): Promise<User>{
-    //     const bill = await this.billRepo
-    //         .createQueryBuilder('bill')
-    //         .innerJoinAndSelect('bill.user', 'user')
-    //         .where('bill.id = :billId', {billId})
-    //         .getOne();
-    //     return bill?.user;
-    // }
+    async changeToAdmin(id: number): Promise<any> {
+        await this.userRepo.update(id, {role: 'ADMIN'});
+        return await this.userRepo.findOne({where: {id: id}})
+    }
 
     async findAll(): Promise<User[]> {
         return await this.userRepo.find()

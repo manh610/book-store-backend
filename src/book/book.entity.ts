@@ -3,6 +3,7 @@ import { Comment } from "src/comment/comment.entity";
 import { BookBill } from "src/bookbill/bookbill.entity";
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Rate } from "src/rate/rate.entity";
+import { Category } from "src/category/category.entity";
 
 @Entity({name: "books"})
 export class Book {
@@ -17,9 +18,6 @@ export class Book {
 
     @Column()
     date: Date
-
-    @Column()
-    category: string
 
     @Column()
     page: number
@@ -48,4 +46,8 @@ export class Book {
     @ManyToOne(() => User, user => user.books)
     @JoinColumn({ name: 'user_id'})
     user: User
+
+    @ManyToOne(() => Category, category => category.books)
+    @JoinColumn({ name: 'category_id'})
+    category: Category
 }

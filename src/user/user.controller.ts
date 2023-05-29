@@ -3,6 +3,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { failResponse, successResponse } from 'src/utils/http';
 import { ILogin, IRegisterUser, IUserCreate, IUserDTO } from './user.type';
+import { IDInteface } from 'src/utils/type';
 
 @Controller('user')
 @ApiTags('User')
@@ -47,6 +48,19 @@ export class UserController {
                 role: 'USER'
             }
             const res = await this.userService.create(data)
+            return successResponse(res);
+        }catch(error) {
+            return failResponse('Execute service went wrong', 'ServiceException');
+        }
+    }
+
+    @Post('/changeToAdmin')
+    async changeToAdmin(@Body() input: IDInteface): Promise<any> {
+        try {
+            const user = await this.userService.findById(input.id);
+            if ( user==null )
+                return failResponse('User Not Found', 'UserNotFound');
+            const res = await this.userService.changeToAdmin(input.id);
             return successResponse(res);
         }catch(error) {
             return failResponse('Execute service went wrong', 'ServiceException');
