@@ -20,10 +20,12 @@ export class BookbillService {
                 id: id,
             },
             relations: [
-                'user', 'book'
+                'user', 'book', 'bill'
             ]
         });
-        const updateSold = await this.bookRepo.update(bookBill.book.id, {sold: bookBill.book.sold - bookBill.amount})
+        if (bookBill!==null) {
+            const updateSold = await this.bookRepo.update(bookBill.book.id, {sold: bookBill.book.sold - bookBill.amount})
+        }
         return await this.bookBillRepo.delete(id);
     }
 
@@ -38,13 +40,13 @@ export class BookbillService {
         });
     }
 
-    async findByUserBook(userId: number, bookId: number): Promise<BookBill> {
-        return await this.bookBillRepo.findOne({
+    async findByUserBook(userId: number, bookId: number): Promise<BookBill[]> {
+        return await this.bookBillRepo.find({
             where: {
                 user: {id: userId},
                 book: {id: bookId}
             },
-            relations: [ 'user', 'book' ]
+            relations: [ 'user', 'book', 'bill' ]
         })
     }
 
@@ -56,7 +58,7 @@ export class BookbillService {
             book: book,
             user: user
         }
-        const updateSold = await this.bookRepo.update(book.id, {sold: book.sold + input.amount})
+        // const updateSold = await this.bookRepo.update(book.id, {sold: book.sold + input.amount})
         return await this.bookBillRepo.save(bookBill);
     }
 
@@ -87,8 +89,21 @@ export class BookbillService {
     }
 
     async updateAmount(id: number, input: ICreateBookBill): Promise<any> {
-        const bookBill = await this.bookBillRepo.findOne({where: { user: {id: input.userId}, book: {id: input.bookId} }});
-        return this.bookBillRepo.update(id, {amount: bookBill.amount + input.amount})
+        const bookBill = await this.bookBillRepo.find({
+            where: { 
+                user: {id: input.userId}, 
+                book: {id: input.bookId} 
+            },
+            relations: ['bill', 'book']
+        });
+        let amount = 0;
+        for ( const tmp of bookBill ) {
+            if ( tmp.bill == null) {
+                amount = tmp.amount;
+                break;
+            }
+        }
+        return this.bookBillRepo.update(id, {amount: amount + input.amount})
     }
 
 }

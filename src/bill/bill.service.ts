@@ -44,8 +44,9 @@ export class BillService {
             const billAns = await this.billRepo.save(bill);
     
             for ( const bookbillReq of input.bookBills ) {
-                const bookbill = await this.bookBillRepo.findOne({where: {id: bookbillReq}});
+                const bookbill = await this.bookBillRepo.findOne({where: {id: bookbillReq}, relations: ['book']});
                 await this.bookBillRepo.update(bookbill.id, {bill: billAns})
+                await this.bookRepo.update(bookbill.book.id, {sold: bookbill.book.sold + bookbill.amount})
             }
             return billAns;
         } catch(err) {
