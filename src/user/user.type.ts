@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 
 export class IRegisterUser {
     @ApiProperty()
-    fullName: string
+    email: string
 
     @ApiProperty()
     username: string
@@ -15,7 +15,7 @@ export class IRegisterUser {
 }
 
 export interface IUserCreate {
-    fullName: string,
+    email: string,
     username: string,
     password: string,
     role: string
@@ -23,7 +23,7 @@ export interface IUserCreate {
 
 export interface IUserDTO {
     id: number,
-    fullName: string,
+    email: string,
     username: string,
     password: string,
     role: string

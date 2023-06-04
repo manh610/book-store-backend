@@ -42,7 +42,7 @@ export class UserController {
             if (user!=null)
                 return failResponse('Username đã tồn tại', 'WrongCredentials');
             const data: IUserCreate = {
-                fullName: input.fullName,
+                email: input.email,
                 username: input.username,
                 password: input.password,
                 role: 'USER'
