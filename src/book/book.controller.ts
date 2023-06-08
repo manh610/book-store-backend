@@ -14,10 +14,7 @@ export class BookController {
     @Post('/create')
     async createbook(@Body() input: ICreateBook): Promise<any> {
         try{
-            if (!input.title || !input.author || 
-                !input.categoryId || !input.page || 
-                input.sold==null || !input.date || !input.userId ||
-                !input.imageUrl || !input.description || input.price==null)
+            if (!input.title || !input.author || !input.date )
                 return failResponse('Cần điền đầy đủ thông tin', 'FieldIsRequired');
             const checkExist = await this.bookService.findByTitleAndAuthor(input.title, input.author);
             if ( checkExist!=null )
