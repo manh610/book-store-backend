@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { BookService } from './book.service';
 import { ICreateBook, IUpdateBook, BookID } from './book.type';
@@ -27,9 +27,9 @@ export class BookController {
     }
 
     @Get('/getAll')
-    async getAllBook(): Promise<any>{
+    async getAllBook(@Query('name') name: string): Promise<any>{
         try{
-            const listBook = await this.bookService.findAll();
+            const listBook = await this.bookService.findAll(name);
             if (listBook==null)
                 return failResponse('Book is not found', 'BookNotFound');
             return successResponse(listBook);

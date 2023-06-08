@@ -15,10 +15,20 @@ export class BookService {
         @InjectRepository(Category) private readonly categoryRepo: Repository<Category>
     ) {}
 
-    async findAll(): Promise<Book[]> {
-        return await this.BookRepo.find({
-            relations: ['user', 'category']
-        });
+    async findAll(name: string): Promise<Book[]> {
+        // return await this.BookRepo.find({
+        //     relations: ['user', 'category']
+        // });
+        try {
+            return await this.BookRepo
+                .createQueryBuilder('book')
+                .leftJoinAndSelect('book.category', 'category')
+                .where('LOWER(book.title) LIKE LOWER(:name)', { name: `%${name}%`})
+                .getMany();
+        } catch(err) {
+            console.log(err)
+        }
+        
     }
 
     async findAllWithBookBill(): Promise<Book[]>{
