@@ -32,12 +32,15 @@ export class UserController {
     @Post('/register')
     async createUser(@Body() input: IRegisterUser): Promise<any> {
         try {
-            if ( !input.username || !input.password || !input.confirmPassword ) 
+            if ( !input.username || !input.password || !input.confirmPassword || !input.email ) 
                 return failResponse('Cần điền đầy đủ thông tin', 'FieldIsRequired');
+            if ( validateEmail(input.email)==false ) {
+                return failResponse('Email không đúng định dạng', 'InvalidEmail');
+            }
             if ( input.password != input.confirmPassword)
-                return failResponse('Confirm password not equal', 'ConfirmNotEqual');
+                return failResponse('Xác nhận mật khẩu không đúng', 'ConfirmNotEqual');
             if ( input.password.length < 8 ) 
-                return failResponse('Password must be longer 8 character','PasswordLengthShort');
+                return failResponse('Mật khẩu cần tối thiểu 8 kí tự','PasswordLengthShort');
             const user: IUserDTO = await this.userService.findByUsername(input.username);
             if (user!=null)
                 return failResponse('Username đã tồn tại', 'WrongCredentials');
@@ -90,4 +93,15 @@ export class UserController {
             return failResponse('Execute service went wrong', 'ServiceException');
         }
     }
+}
+
+
+const validateEmail = (email) => {
+    var regexPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  
+    if (regexPattern.test(email)) {
+        return true; 
+    }
+    
+    return false;
 }
